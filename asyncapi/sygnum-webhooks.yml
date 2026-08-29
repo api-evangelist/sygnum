@@ -1,0 +1,42 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  the public API catalogue and route table shipped in the developer.sygnum.com application
+  bundle (HTTP 200, 2026-08-29)
+type: Webhooks
+asyncapi_spec_published: false
+note: >-
+  Sygnum ships no AsyncAPI document and no public event catalogue. What is public is that
+  three of its APIs each carry a SEPARATE web-hook specification document in the developer
+  portal catalogue, plus one WebSocket streaming specification. The channels, event names
+  and payloads live inside those gated specifications and are NOT reproduced or guessed
+  here — only the existence and location of each event surface is recorded.
+event_surfaces:
+- name: Trading webhooks
+  kind: webhook
+  document_id: TradingWebHook
+  docs: https://developer.sygnum.com/trading/web-hook
+  api: Sygnum Trading API
+  events_published: false
+- name: Staking webhooks
+  kind: webhook
+  document_id: StakingWebHook
+  docs: https://developer.sygnum.com/staking/web-hook
+  api: Sygnum Staking API
+  events_published: false
+- name: Digital Transfer webhooks
+  kind: webhook
+  document_id: DigitalTransferWebHook
+  docs: https://developer.sygnum.com/staking/digital-transfer/web-hook
+  api: Sygnum Digital Transfer API
+  events_published: false
+- name: Market Data WebSocket
+  kind: websocket
+  document_id: MarketDataWebSocket
+  docs: https://developer.sygnum.com/market-data/web-socket
+  api: Sygnum Market Data API
+  events_published: false
+delivery:
+  signing: not published
+  retries: not published
+  replay: not published

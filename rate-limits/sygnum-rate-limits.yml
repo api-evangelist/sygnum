@@ -1,0 +1,33 @@
+generated: '2026-08-29'
+method: probed
+source: >-
+  live anonymous requests to https://api.sygnum.com/b2b/v1/available-scopes and
+  /b2b/v1/clients, response headers inspected 2026-08-29
+limit_count: 0
+note: >-
+  No rate limits are published for the Sygnum B2B API and none were signalled at runtime.
+  The 401 responses from api.sygnum.com carry no X-RateLimit-*, no RateLimit-* (RFC 9331
+  draft) and no Retry-After header. An agent integrating against this API has no runtime
+  budget signal at all and would have to discover limits by hitting them.
+limits: []
+headers_observed: []
+headers_absent:
+- X-RateLimit-Limit
+- X-RateLimit-Remaining
+- X-RateLimit-Reset
+- RateLimit
+- RateLimit-Policy
+- Retry-After
+exhaustion_status: not published
+evidence:
+- url: https://api.sygnum.com/b2b/v1/available-scopes
+  status: 401
+  headers: >-
+    www-authenticate, vary, access-control-allow-origin, cf-cache-status,
+    x-xss-protection, expect-ct, referrer-policy, x-content-type-options,
+    x-frame-options, server, cf-ray
+- url: https://api.sygnum.com/b2b/v1/clients
+  status: 401
+caveat: >-
+  Only anonymous, pre-authentication responses were observable. Limits may be documented
+  inside the client-only specifications and may be signalled on authenticated responses.

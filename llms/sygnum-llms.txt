@@ -1,0 +1,83 @@
+# Sygnum
+
+> Sygnum is a FINMA-regulated Swiss digital asset banking group (Zurich, with entities in
+> Singapore and Abu Dhabi) that sells its banking stack to other institutions through a B2B
+> API layer. The catalogue covers Banking, Trading (REST and FIX), Custody, Staking, Wallet,
+> Digital Transfer, Sygnum Protect (off-exchange custody), Sygnum Connect (24/7 instant
+> multi-asset settlement) and Market Data (REST and WebSocket).
+
+generated: 2026-08-29
+method: generated
+source: api-evangelist enrichment of https://developer.sygnum.com + live probes of api.sygnum.com and auth.sygnum.com
+
+## What an agent can and cannot do here
+
+- Base URL: https://api.sygnum.com/b2b (routes observed under /b2b/v1).
+- Auth: OAuth 2.0 client credentials from https://auth.sygnum.com/oauth/token, sent as
+  `Authorization: Bearer`. Clients are created in the portal's Access Management screen and
+  authenticate with private_key_jwt (key identifier + public key/certificate + expiry).
+- The machine-readable specifications EXIST but are NOT public. The developer portal offers
+  a "Download specification" control per API, served from
+  https://api.sygnum.com/b2b/v1/assets/content/dev-portal-assets-map, which returns HTTP 401
+  to anonymous callers. There is no public OpenAPI, no GraphQL, no MCP server and no A2A
+  agent card.
+- Access follows a bank client relationship: "Become a client", then the Sygnum team issues
+  UAT test credentials, then production.
+- No rate limits are published and none are signalled in response headers.
+
+## APIs
+
+- [Banking](https://developer.sygnum.com/banking): real-time balances across fiat, digital
+  assets and traditional securities, with role-based permissions.
+- [Trading (REST)](https://developer.sygnum.com/trading): order management and execution for
+  digital asset trading.
+- [Trading (FIX)](https://developer.sygnum.com/trading/fix): the same trading service over
+  the FIX protocol, published as its own specification.
+- [Trading webhooks](https://developer.sygnum.com/trading/web-hook): asynchronous trade events.
+- [Custody](https://developer.sygnum.com/custody): account balances in Sygnum's
+  institutional-grade custody environment.
+- [Staking](https://developer.sygnum.com/staking): regulated Ethereum staking, rewards and
+  portfolio tracking, plus [staking webhooks](https://developer.sygnum.com/staking/web-hook).
+- [Wallet](https://developer.sygnum.com/staking/wallet): wallet resources.
+- [Digital Transfer](https://developer.sygnum.com/staking/digital-transfer): asset transfers
+  in and out, plus
+  [transfer webhooks](https://developer.sygnum.com/staking/digital-transfer/web-hook).
+- [Sygnum Protect](https://developer.sygnum.com/protect): off-exchange custody — an exchange
+  can verify a client's collateral held at Sygnum via API.
+- [Sygnum Connect](https://developer.sygnum.com/connect): 24/7 instant settlement of crypto,
+  stablecoins and fiat between member institutions.
+- [Market Data](https://developer.sygnum.com/market-data): prices and market state, with a
+  [WebSocket stream](https://developer.sygnum.com/market-data/web-socket).
+- [Access Management](https://developer.sygnum.com/client-management): create and scope Auth0
+  clients and their credentials.
+
+## Errors
+
+Vendor envelope, not RFC 9457:
+
+    {"errors":[{"message":"..."}],"path":"/b2b/v1/available-scopes","status":"B2B.0006","timestamp":"2026-08-29 15:18:23"}
+
+`B2B.0006` = missing or invalid authentication credentials (HTTP 401).
+
+## Docs and identity
+
+- Developer portal: https://developer.sygnum.com/
+- How to connect: https://developer.sygnum.com/how-to-connect
+- API catalogue: https://developer.sygnum.com/catalog
+- B2B banking overview: https://www.sygnum.com/b2b-banking/
+- Sygnum Connect: https://www.sygnum.com/sygnum-connect/
+- Support portal: https://www.sygnum.com/help/
+- Research and insights: https://www.sygnum.com/future-finance/
+- News: https://www.sygnum.com/news/
+- Become a client: https://start.join.sygnum.com/
+- GitHub (smart contracts only): https://github.com/sygnumbank
+- Security contact: mailto:security@sygnum.com (https://www.sygnum.com/.well-known/security.txt)
+- Terms of use: https://www.sygnum.com/terms-of-use/
+- Privacy notice: https://www.sygnum.com/privacy-notice/
+- Regulatory disclosures: https://www.sygnum.com/regulatory-disclosures/
+
+## Compliance
+
+FINMA banking and securities dealer licence (26 August 2019); custody environment certified
+under ISAE 3000 and ISAE 3402; FIPS 140-2 Level 3 key-management hardware; Tier IV Swiss data
+centres. No public ISO 27001 or SOC 2 claim was found, and no trust center is published.

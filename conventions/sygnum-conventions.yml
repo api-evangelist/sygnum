@@ -1,0 +1,94 @@
+generated: '2026-08-29'
+method: probed
+source: >-
+  live probes of https://api.sygnum.com/b2b/* and https://auth.sygnum.com/.well-known/*,
+  plus the public route table and copy shipped in the developer.sygnum.com application
+  bundle (2026-08-29)
+note: >-
+  Sygnum publishes no OpenAPI and no public conventions page, so every field here is either
+  observed on a live response or left explicitly unknown. Nothing is inferred.
+authentication:
+  style: oauth2-bearer
+  header: Authorization
+  detail: See authentication/sygnum-authentication.yml.
+base_url: https://api.sygnum.com/b2b
+versioning:
+  style: uri-path
+  current: v1
+  example: https://api.sygnum.com/b2b/v1/available-scopes
+  evidence: every observed B2B route is prefixed /b2b/v1
+media_types:
+  request: application/json
+  response: application/json; charset=utf-8
+error_envelope:
+  shape: '{errors:[{message}], path, status, timestamp}'
+  rfc9457: false
+  see: errors/sygnum-problem-types.yml
+idempotency:
+  supported: unknown
+  detail: >-
+    No idempotency key header is documented publicly and none was observable on an
+    anonymous request. The write surfaces (order placement, transfers, staking, settlement)
+    are all behind the client-only specifications.
+pagination:
+  style: unknown
+  detail: Not observable without an authenticated response or a published specification.
+rate_limit_signaling:
+  headers_observed: []
+  detail: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header was present on the anonymous 401
+    responses from api.sygnum.com. See rate-limits/sygnum-rate-limits.yml.
+request_tracing:
+  gateway_field: request_id
+  detail: >-
+    The Kong gateway returns a `request_id` in its 404 body; Cloudflare additionally
+    returns a `cf-ray` header on every response. No application-level request-id header was
+    observed on the B2B 401s.
+cors:
+  allow_origin: https://developer.sygnum.com
+  allow_credentials: true
+  detail: >-
+    The B2B API is CORS-scoped to the developer portal origin only; it is not a
+    browser-callable public API.
+transport_security:
+  tls: TLSv1.3
+  hsts: not set on api.sygnum.com (set on www.sygnum.com, max-age 2592000)
+  headers:
+  - x-content-type-options: nosniff
+  - x-frame-options: SAMEORIGIN
+  - referrer-policy: same-origin
+  - expect-ct: max-age=86400, enforce
+interface_styles:
+- rest
+- fix
+- websocket
+- webhooks
+reversibility:
+  grade: unknown
+  state: undocumented
+  detail: >-
+    Sygnum's B2B surface is unambiguously a write surface — order placement and
+    cancellation, digital asset transfers, staking and unstaking, and 24/7 settlement — so
+    reversibility is NOT `na` here. But no reversal operation, no operationId and no
+    reversal window is published anywhere public: the specifications download only to
+    authenticated Sygnum clients. The staking UI strings shipped in the portal bundle name
+    an `unstaking` transaction type, which implies a reversal path for staking, but no
+    window is stated and no operation is named, so nothing is graded from it.
+  reversals: []
+  action_for_provider: >-
+    Publish, per write surface, the reversal operation and the window inside which it works
+    (cancel before fill, unstake exit-queue duration, settlement recall window). An agent
+    needs to know what it can take back BEFORE it acts.
+dry_run_mode:
+  supported: unknown
+  detail: >-
+    A UAT environment is offered to onboarded partners (see sandbox/sygnum-sandbox.yml),
+    which is environment-level rehearsal rather than a per-request dry-run flag. No
+    dry-run parameter is published.
+cross_links:
+  errors: errors/sygnum-problem-types.yml
+  authentication: authentication/sygnum-authentication.yml
+  scopes: scopes/sygnum-scopes.yml
+  lifecycle: lifecycle/sygnum-lifecycle.yml
+  rate_limits: rate-limits/sygnum-rate-limits.yml
+  sandbox: sandbox/sygnum-sandbox.yml

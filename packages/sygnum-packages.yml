@@ -1,0 +1,27 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  registry.npmjs.org search (text=sygnum), pypi.org/pypi/sygnum/json, and
+  https://github.com/sygnumbank, probed 2026-08-29
+package_count: 0
+official_sdk_count: 0
+note: >-
+  Sygnum publishes no client SDK on any package registry. The npm registry search for
+  "sygnum" returns zero objects; PyPI has no "sygnum" project. The company's GitHub
+  organisation (sygnumbank) is real and active but contains only Solidity smart-contract
+  repositories mirrored from an internal VCS — solidity-base-contracts,
+  solidity-equity-token-contracts, solidity-edge-dchf-contracts, solidity-dex-contracts,
+  solidity-raise-contracts, solidity-nft-contracts, syguard-contracts, sba-deposit-token,
+  sba-escrow — none of which is a client library for the B2B APIs. Integrators write
+  against raw REST, FIX and WebSocket.
+packages: []
+registries_checked:
+- registry: npm
+  query: https://registry.npmjs.org/-/v1/search?text=sygnum
+  result: 0 objects
+- registry: pypi
+  query: https://pypi.org/pypi/sygnum/json
+  result: 404 Not Found
+- registry: github
+  query: https://github.com/sygnumbank
+  result: 200 — smart-contract repositories only, no client SDK

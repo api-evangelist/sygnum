@@ -1,0 +1,68 @@
+generated: '2026-08-29'
+method: probed
+source: >-
+  live anonymous requests to https://api.sygnum.com/b2b/v1/available-scopes,
+  /b2b/v1/clients, /b2b/v1/assets/content/dev-portal-assets-map and
+  https://api.sygnum.com/ (HTTP 401 / 404 responses observed 2026-08-29)
+format: vendor-json
+rfc9457: false
+note: >-
+  Sygnum publishes no error reference publicly and no OpenAPI to derive one from. The
+  envelope and the one status code below were read off real responses; no other code is
+  listed because no other code was observed or published. The API does NOT use
+  application/problem+json (RFC 9457) — it returns application/json with a vendor envelope.
+envelope:
+  content_type: application/json; charset=utf-8
+  fields:
+  - name: errors
+    type: array
+    description: One entry per error, each carrying a human-readable `message`.
+  - name: path
+    type: string
+    description: >-
+      The matched route template, not the literal request path — a request to
+      /b2b/v1/assets/content/uploads/test echoes
+      /b2b/v1/assets/content/uploads/{assetSlug}.
+  - name: status
+    type: string
+    description: Vendor error code in the form B2B.NNNN.
+  - name: timestamp
+    type: string
+    description: 'Server time, format: YYYY-MM-DD HH:MM:SS (no timezone offset).'
+  example: |
+    {
+      "errors": [{"message": "Request missing or invalid authentication credentials"}],
+      "path": "/b2b/v1/available-scopes",
+      "status": "B2B.0006",
+      "timestamp": "2026-08-29 15:18:23"
+    }
+gateway_envelope:
+  note: >-
+    Unrouted paths are answered by the Kong gateway in front of the B2B API, with a
+    different shape than the application envelope above.
+  example: |
+    {"message":"no Route matched with those values","request_id":"227477096d7d05205..."}
+problem_types:
+- code: B2B.0006
+  http_status: 401
+  title: Request missing or invalid authentication credentials
+  observed_on:
+  - /b2b/v1/available-scopes
+  - /b2b/v1/clients
+  - /b2b/v1/assets/content/dev-portal-assets-map
+  - /b2b/v1/assets/content/uploads/{assetSlug}
+  www_authenticate: 'Bearer realm="auth.sygnum.com", error="invalid_token"'
+  remediation: >-
+    Obtain an access token from https://auth.sygnum.com/oauth/token using the Auth0 client
+    credentials issued in the developer portal, and send it as `Authorization: Bearer`.
+- code: null
+  http_status: 404
+  title: no Route matched with those values
+  source: gateway
+  remediation: Check the path prefix; the B2B surface is mounted at /b2b/v1.
+coverage:
+  observed: 2
+  published_reference: none
+  detail: >-
+    An error-code reference is presumably inside the gated specification downloads. Nothing
+    is inferred from the B2B.0006 numbering.

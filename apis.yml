@@ -1,18 +1,160 @@
 aid: sygnum
 name: Sygnum
-description: 'Sygnum is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Sygnum is a regulated digital asset banking group, headquartered in Zurich with a
+  Singapore arm, that received a Swiss FINMA banking and securities dealer licence in
+  August 2019. It provides institutional custody, spot and derivatives trading, staking,
+  tokenisation, Lombard lending and 24/7 instant settlement for banks, asset managers,
+  exchanges and corporates. Its B2B business is delivered through an API layer published
+  at developer.sygnum.com — a catalogue covering Banking, Trading (REST and FIX), Custody,
+  Staking, Wallet, Digital Transfer, Sygnum Protect (off-exchange custody), Sygnum Connect
+  (instant settlement) and Market Data (REST and WebSocket) — served from the
+  api.sygnum.com/b2b gateway and secured with OAuth 2.0 client credentials issued from the
+  bank's Auth0 tenant at auth.sygnum.com. The specifications themselves are downloadable
+  only to authenticated Sygnum clients from the developer portal.
 url: https://raw.githubusercontent.com/api-evangelist/sygnum/refs/heads/main/apis.yml
+image: https://avatars.githubusercontent.com/sygnumbank
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment
 specificationVersion: '0.20'
 created: '2026-08-29'
 modified: '2026-08-29'
 tags:
 - Company
-apis: []
+- Banking
+- Digital Assets
+- Cryptocurrency
+- Custody
+- Trading
+- Staking
+- Tokenization
+- Settlement
+- Market Data
+- Financial Services
+- Switzerland
+- Singapore
+- B2B
+apis:
+- name: Sygnum Banking API
+  description: >-
+    Real-time account and balance retrieval across fiat, digital assets and traditional
+    securities held at Sygnum, with role-based permissions, exposed to B2B partners as REST.
+  humanURL: https://developer.sygnum.com/banking
+  baseURL: https://api.sygnum.com/b2b
+  tags:
+  - Banking
+  - Accounts
+  - Balances
+  properties:
+  - type: Authentication
+    url: authentication/sygnum-authentication.yml
+- name: Sygnum Trading API
+  description: >-
+    Order management and execution for Sygnum's digital asset trading service, offered over
+    both REST and the FIX protocol, with a webhook channel for asynchronous trade events.
+  humanURL: https://developer.sygnum.com/trading
+  baseURL: https://api.sygnum.com/b2b
+  tags:
+  - Trading
+  - Orders
+  - FIX
+  properties:
+  - type: FIX
+    url: https://developer.sygnum.com/trading/fix
+  - type: Webhooks
+    url: asyncapi/sygnum-webhooks.yml
+- name: Sygnum Custody API
+  description: >-
+    Endpoint set designed for bank clients to fetch account balances held in Sygnum's
+    institutional-grade digital asset custody environment.
+  humanURL: https://developer.sygnum.com/custody
+  baseURL: https://api.sygnum.com/b2b
+  tags:
+  - Custody
+  - Digital Assets
+- name: Sygnum Staking API
+  description: >-
+    Regulated Ethereum staking for retail and institutional clients — real-time staking,
+    automated rewards, flexible amounts and portfolio tracking — with a webhook channel for
+    staking lifecycle events.
+  humanURL: https://developer.sygnum.com/staking
+  baseURL: https://api.sygnum.com/b2b
+  tags:
+  - Staking
+  - Ethereum
+  - Rewards
+  properties:
+  - type: Webhooks
+    url: asyncapi/sygnum-webhooks.yml
+- name: Sygnum Wallet API
+  description: >-
+    Wallet service API covering wallet resources attached to Sygnum staking and digital
+    asset accounts.
+  humanURL: https://developer.sygnum.com/staking/wallet
+  baseURL: https://api.sygnum.com/b2b
+  tags:
+  - Wallet
+  - Digital Assets
+- name: Sygnum Digital Transfer API
+  description: >-
+    Digital asset transfer service API for moving assets in and out of Sygnum, with a
+    webhook channel for transfer status events.
+  humanURL: https://developer.sygnum.com/staking/digital-transfer
+  baseURL: https://api.sygnum.com/b2b
+  tags:
+  - Transfers
+  - Digital Assets
+  properties:
+  - type: Webhooks
+    url: asyncapi/sygnum-webhooks.yml
+- name: Sygnum Protect API
+  description: >-
+    API for Sygnum Protect, the bank's off-exchange custody solution that lets exchanges
+    verify client collateral held at Sygnum without moving it onto the venue.
+  humanURL: https://developer.sygnum.com/protect
+  baseURL: https://api.sygnum.com/b2b
+  tags:
+  - Off-Exchange Custody
+  - Collateral
+- name: Sygnum Connect API
+  description: >-
+    API for Sygnum Connect, the bank's 24/7 instant multi-asset settlement network for
+    crypto assets, stablecoins and fiat between member institutions.
+  humanURL: https://developer.sygnum.com/connect
+  baseURL: https://api.sygnum.com/b2b
+  tags:
+  - Settlement
+  - Payments
+  - Stablecoins
+- name: Sygnum Market Data API
+  description: >-
+    Market data service exposed as REST plus a streaming WebSocket channel, so partners can
+    stream prices and monitor markets inside their own systems.
+  humanURL: https://developer.sygnum.com/market-data
+  baseURL: https://api.sygnum.com/b2b
+  tags:
+  - Market Data
+  - Streaming
+  - WebSocket
+  properties:
+  - type: WebSocket
+    url: https://developer.sygnum.com/market-data/web-socket
+- name: Sygnum Access Management API
+  description: >-
+    Client-management surface of the developer portal — create and manage Auth0 clients,
+    attach credentials (public key or certificate with a key identifier and expiry) and
+    scope their access to Sygnum APIs.
+  humanURL: https://developer.sygnum.com/client-management
+  baseURL: https://api.sygnum.com/b2b
+  tags:
+  - Access Management
+  - OAuth
+  - Credentials
+  properties:
+  - type: OAuthScopes
+    url: scopes/sygnum-scopes.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +162,92 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://www.hiive.com/securities/sygnum-stock
+  url: https://www.sygnum.com/
+- type: DeveloperPortal
+  url: https://developer.sygnum.com/
+- type: Documentation
+  url: https://developer.sygnum.com/catalog
+- type: APIReference
+  url: https://developer.sygnum.com/catalog
+- type: GettingStarted
+  url: https://developer.sygnum.com/how-to-connect
+- type: SignUp
+  url: https://start.join.sygnum.com/
+- type: Login
+  url: https://developer.sygnum.com/login
+- type: Support
+  url: https://www.sygnum.com/help/
+- type: Blog
+  url: https://www.sygnum.com/future-finance/
+- type: GitHubOrganization
+  url: https://github.com/sygnumbank
+- type: PrivacyPolicy
+  url: https://www.sygnum.com/privacy-notice/
+- type: TermsOfService
+  url: https://www.sygnum.com/terms-of-use/
+- type: Imprint
+  url: https://www.sygnum.com/imprint/
+- type: Pricing
+  url: https://www.sygnum.com/help/accounts/custody-fees-at-sygnum/
+- type: Plans
+  url: plans/sygnum-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/sygnum-rate-limits.yml
+- type: Authentication
+  url: authentication/sygnum-authentication.yml
+- type: OAuthScopes
+  url: scopes/sygnum-scopes.yml
+- type: WellKnown
+  url: well-known/sygnum-well-known.yml
+- type: OpenIDConnect
+  url: well-known/sygnum-auth-openid-configuration.json
+- type: Conformance
+  url: conformance/sygnum-conformance.yml
+- type: Compliance
+  url: conformance/sygnum-conformance.yml
+- type: ErrorCatalog
+  url: errors/sygnum-problem-types.yml
+- type: Conventions
+  url: conventions/sygnum-conventions.yml
+- type: Lifecycle
+  url: lifecycle/sygnum-lifecycle.yml
+- type: Sandbox
+  url: sandbox/sygnum-sandbox.yml
+- type: Webhooks
+  url: asyncapi/sygnum-webhooks.yml
+- type: DomainSecurity
+  url: security/sygnum-domain-security.yml
+- type: Packages
+  url: packages/sygnum-packages.yml
+- type: LLMsTxt
+  url: llms/sygnum-llms.txt
+- type: SecurityTxt
+  url: well-known/sygnum-security.txt
+- type: Security
+  url: security/sygnum-vulnerability-disclosure.yml
+- type: VulnerabilityDisclosure
+  url: security/sygnum-vulnerability-disclosure.yml
+
+x-enrichment:
+  date: '2026-08-29'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v1
+
+x-coverage:
+  state: gated
+  reason: customer-only-docs
+  detail: >-
+    Sygnum's developer portal ships a "Download specification" control for each of its ten
+    B2B APIs, but the specifications are served from
+    https://api.sygnum.com/b2b/v1/assets/content/dev-portal-assets-map, which returns HTTP
+    401 to anyone who is not a logged-in Sygnum client — the portal's own copy says
+    registration requires an existing client relationship.
+  evidence:
+  - url: https://api.sygnum.com/b2b/v1/assets/content/dev-portal-assets-map
+    status: 401
+  - url: https://api.sygnum.com/b2b/v1/available-scopes
+    status: 401
+  - url: https://developer.sygnum.com/
+    status: 200
+  checked: '2026-08-29'

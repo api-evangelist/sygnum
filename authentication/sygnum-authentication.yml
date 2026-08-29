@@ -1,0 +1,80 @@
+generated: '2026-08-29'
+method: probed
+source: >-
+  https://auth.sygnum.com/.well-known/openid-configuration (HTTP 200) plus the
+  WWW-Authenticate challenge returned by https://api.sygnum.com/b2b/v1/available-scopes
+  (HTTP 401) and the Access Management copy published in the developer.sygnum.com bundle
+note: >-
+  Sygnum publishes no OpenAPI, so this profile is not derived from a securitySchemes block.
+  Every field below was read from a live anonymous probe of the bank's own hosts.
+summary: >-
+  OAuth 2.0 bearer tokens issued by Sygnum's Auth0 tenant at auth.sygnum.com. B2B partners
+  self-service their machine clients in the developer portal's Access Management screen:
+  each Auth0 client is created against a contract, given one or more credentials (a public
+  key or certificate with a key identifier and an expiry time) and scoped to the Sygnum
+  APIs it may call.
+schemes:
+- id: oauth2_client_credentials
+  type: oauth2
+  flow: clientCredentials
+  in: header
+  header: Authorization
+  format: Bearer <access_token>
+  token_endpoint: https://auth.sygnum.com/oauth/token
+  issuer: https://auth.sygnum.com/
+  jwks_uri: https://auth.sygnum.com/.well-known/jwks.json
+  audience: per-contract Auth0 audience, shown in the portal's Access Management screen
+  client_authentication:
+  - private_key_jwt
+  - client_secret_basic
+  - client_secret_post
+  - none
+  note: >-
+    The portal's credential form asks for a key identifier (kid), a PUBLIC KEY or
+    CERTIFICATE and an expiry time, which is the private_key_jwt client-authentication
+    method advertised in the discovery document.
+  evidence:
+    url: https://api.sygnum.com/b2b/v1/available-scopes
+    http_status: 401
+    www_authenticate: 'Bearer realm="auth.sygnum.com", error="invalid_token"'
+- id: oidc_user_login
+  type: openIdConnect
+  openIdConnectUrl: https://auth.sygnum.com/.well-known/openid-configuration
+  note: >-
+    Human login to the developer portal itself. Authorization Code with PKCE (S256 and
+    plain advertised); MFA challenge endpoint present.
+  authorization_endpoint: https://auth.sygnum.com/authorize
+  userinfo_endpoint: https://auth.sygnum.com/userinfo
+  end_session_endpoint: https://auth.sygnum.com/oidc/logout
+  revocation_endpoint: https://auth.sygnum.com/oauth/revoke
+grant_types_supported:
+- client_credentials
+- authorization_code
+- refresh_token
+- implicit
+- password
+- urn:ietf:params:oauth:grant-type:device_code
+- urn:ietf:params:oauth:grant-type:token-exchange
+- urn:ietf:params:oauth:grant-type:jwt-bearer
+token_signing_algs:
+- RS256
+- RS384
+- PS256
+pkce_methods:
+- S256
+- plain
+mtls: false
+api_keys:
+  used: partial
+  note: >-
+    Portal copy ("the API key will appear in the overview section of the specific requested
+    API in the developer portal") indicates a per-API key is also surfaced to onboarded
+    clients alongside the OAuth client. The key's transport header is not published
+    publicly and was not observed on any anonymous response.
+docs: https://developer.sygnum.com/how-to-connect
+gated:
+  is_gated: true
+  detail: >-
+    The specification downloads and the Access Management screen require an authenticated
+    Sygnum client login; only the OIDC discovery document and the 401 challenge are
+    anonymous.

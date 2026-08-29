@@ -1,0 +1,35 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  onboarding copy published in the public developer.sygnum.com application bundle
+  ("How to connect" cards and the howToConnect page), HTTP 200, 2026-08-29
+summary: >-
+  Sygnum runs a named UAT environment for partner integration. It is not a self-serve
+  sandbox: the bank's team completes the setup, then issues test credentials, and the API
+  key appears in the overview section of the requested API inside the developer portal.
+environments:
+- name: UAT
+  purpose: >-
+    Partner integration testing against the Sygnum B2B APIs before promotion to production.
+  self_serve: false
+  access: >-
+    Provisioned by the Sygnum team after the client relationship and contract are in place.
+  base_url: not published
+- name: Production
+  base_url: https://api.sygnum.com/b2b
+  access: OAuth 2.0 client credentials from https://auth.sygnum.com/oauth/token
+quotes:
+- source: https://developer.sygnum.com/how-to-connect
+  text: >-
+    Once the Sygnum team completes the necessary setup, test credentials will be provided,
+    and the API key will appear in the overview section of the specific requested API in
+    the developer portal.
+- source: https://developer.sygnum.com/
+  text: >-
+    Connect to our UAT environment, test the APIs, and reach out if you have any questions.
+    We'll assist you in completing the integration with our production environment.
+test_data:
+  published: false
+  detail: >-
+    No test values, magic identifiers, test wallets or fixture tooling are published. None
+    are invented here.

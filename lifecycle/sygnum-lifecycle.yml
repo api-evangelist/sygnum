@@ -1,0 +1,38 @@
+generated: '2026-08-29'
+method: probed
+source: >-
+  live probes of https://api.sygnum.com/b2b/*, https://status.sygnum.com (DNS NXDOMAIN),
+  and the developer.sygnum.com route table, 2026-08-29
+versioning:
+  scheme: uri-path
+  current: v1
+  evidence: every observed B2B route is prefixed /b2b/v1
+  policy_published: false
+deprecation:
+  policy_published: false
+  sunset_header: not observed
+  deprecation_header: not observed
+  detail: >-
+    No RFC 8594 Sunset/Deprecation signalling was observed on any anonymous response and no
+    deprecation policy is published on developer.sygnum.com or www.sygnum.com.
+status_page:
+  published: false
+  probes:
+  - url: https://status.sygnum.com/
+    status: no response (NXDOMAIN)
+  detail: >-
+    No status page or uptime history was found for the API. Incidents would only reach
+    partners through the account channel.
+sla:
+  published: false
+  detail: >-
+    Sygnum markets 24/7 settlement and trading infrastructure but publishes no availability
+    target or SLA for the B2B API on any public page.
+changelog:
+  published: false
+  detail: >-
+    No dated API changelog or release notes were found. The bank's news feed
+    (https://www.sygnum.com/news/) covers products, not API versions.
+support:
+  url: https://www.sygnum.com/help/
+  detail: Support portal and FAQ; API onboarding runs through the Sygnum account team.

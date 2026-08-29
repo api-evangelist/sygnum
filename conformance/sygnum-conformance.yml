@@ -1,0 +1,131 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://auth.sygnum.com/.well-known/openid-configuration (HTTP 200),
+  https://www.sygnum.com/.well-known/security.txt (HTTP 200),
+  https://www.sygnum.com/digital-asset-banking/custody/ (HTTP 200),
+  https://www.sygnum.com/regulatory-disclosures/ (HTTP 200),
+  https://www.sygnum.com/b2b-banking/ (HTTP 200),
+  the public route table of https://developer.sygnum.com (HTTP 200)
+note: >-
+  Only conformance that Sygnum itself declares, or that was observed on a live anonymous
+  response, is recorded. Anything unobservable behind the client-only specification
+  downloads is marked conforms: null rather than guessed.
+standards:
+- id: oauth2
+  name: OAuth 2.0 (RFC 6749)
+  conforms: true
+  evidence: >-
+    Token endpoint https://auth.sygnum.com/oauth/token; client_credentials among
+    grant_types_supported; API answers 401 with
+    WWW-Authenticate: Bearer realm="auth.sygnum.com", error="invalid_token".
+- id: oidc
+  name: OpenID Connect Core / Discovery 1.0
+  conforms: true
+  evidence: >-
+    Full discovery document served at
+    https://auth.sygnum.com/.well-known/openid-configuration with issuer, authorization,
+    token, userinfo, jwks and end_session endpoints.
+- id: rfc8414
+  name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+  conforms: true
+  evidence: https://auth.sygnum.com/.well-known/oauth-authorization-server returns HTTP 200.
+- id: rfc7636
+  name: PKCE (RFC 7636)
+  conforms: true
+  evidence: 'code_challenge_methods_supported: ["S256","plain"].'
+- id: rfc7523
+  name: JWT client authentication (RFC 7523 / private_key_jwt)
+  conforms: true
+  evidence: >-
+    token_endpoint_auth_methods_supported includes private_key_jwt; the portal's credential
+    form collects a key identifier and a PUBLIC KEY or CERTIFICATE with an expiry time.
+- id: rfc9116
+  name: security.txt (RFC 9116)
+  conforms: true
+  evidence: >-
+    https://www.sygnum.com/.well-known/security.txt returns HTTP 200 with
+    "Contact: mailto:security@sygnum.com".
+- id: rfc9457
+  name: Problem Details for HTTP APIs (RFC 9457)
+  conforms: false
+  evidence: >-
+    Observed error responses use application/json with a vendor envelope
+    {errors,path,status,timestamp}, not application/problem+json.
+- id: openapi
+  name: OpenAPI
+  conforms: null
+  evidence: >-
+    The developer portal ships a "Download specification" control per API, so machine
+    -readable specifications exist, but they are served only to authenticated clients from
+    https://api.sygnum.com/b2b/v1/assets/content/dev-portal-assets-map (HTTP 401 anonymous).
+    Their format is not publicly stated.
+- id: websocket
+  name: WebSocket streaming
+  conforms: true
+  evidence: >-
+    A dedicated Market Data WebSocket specification (MarketDataWebSocket) is listed in the
+    developer portal catalogue at https://developer.sygnum.com/market-data/web-socket.
+- id: webhooks
+  name: Webhook callbacks
+  conforms: true
+  evidence: >-
+    Trading, Staking and Digital Transfer each carry a separate web-hook specification in
+    the portal catalogue (TradingWebHook, StakingWebHook, DigitalTransferWebHook).
+domain_standards:
+- id: fix
+  name: FIX Protocol (Financial Information eXchange)
+  market: capital markets / digital asset trading
+  conforms: true
+  evidence: >-
+    Sygnum publishes a dedicated FIX specification for its Trading API as a first-class
+    document in the developer portal catalogue — document id "TradingFix", route
+    https://developer.sygnum.com/trading/fix, and a "How to connect / Fix" onboarding
+    section separate from the "REST & WebSocket" one. The B2B trading surface is therefore
+    reachable by a counterparty that already speaks FIX without a bespoke connector.
+  detail: >-
+    The FIX version and the supported message set are inside the gated specification and
+    are not asserted here.
+- id: iso20022
+  name: ISO 20022
+  market: payments / settlement
+  conforms: null
+  evidence: >-
+    Sygnum Connect is a 24/7 multi-asset settlement network between member institutions,
+    which is the market where ISO 20022 lives, but no ISO 20022 message type is declared on
+    any public Sygnum surface. Not asserted.
+compliance:
+  regulated: true
+  certifications:
+  - name: FINMA banking and securities dealer licence
+    authority: Swiss Financial Market Supervisory Authority (FINMA)
+    scope: Sygnum Bank AG, Zurich
+    since: '2019-08-26'
+    source: https://www.sygnum.com/regulatory-disclosures/
+  - name: ISAE 3000
+    scope: custody environment — key generation and operational controls
+    source: https://www.sygnum.com/digital-asset-banking/custody/
+  - name: ISAE 3402
+    scope: custody environment — key generation and operational controls
+    source: https://www.sygnum.com/digital-asset-banking/custody/
+  - name: FIPS 140-2 Level 3
+    scope: custody key-management hardware
+    source: https://www.sygnum.com/digital-asset-banking/custody/
+  - name: Tier IV data centres
+    scope: Swiss-based hosting for the custody platform
+    source: https://www.sygnum.com/digital-asset-banking/custody/
+  regimes:
+  - jurisdiction: Switzerland
+    supervisor: FINMA
+    detail: Regulated bank and securities dealer; digital asset trading facility (OTF) cleared by FINMA.
+  - jurisdiction: Singapore
+    entity: Sygnum Pte. Ltd., 3 Fraser Street, DUO Tower
+    detail: Singapore arm of the group.
+    source: https://www.sygnum.com/help/accounts/custody-fees-at-sygnum/
+  - jurisdiction: Abu Dhabi, UAE
+    entity: Sygnum Bank Middle East, ADGM Square, Al Maryah Island
+    source: https://www.sygnum.com/help/accounts/custody-fees-at-sygnum/
+  not_found:
+  - ISO 27001 (no public claim located)
+  - SOC 2 (no public claim located)
+  - a public trust center at trust.sygnum.com (host does not resolve)

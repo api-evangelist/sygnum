@@ -1,0 +1,18 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  searched Sygnum's developer portal bundle, www.sygnum.com, the sygnumbank GitHub
+  organisation and the npm registry for an MCP server; probed /.well-known/* on
+  api.sygnum.com, developer.sygnum.com, auth.sygnum.com and www.sygnum.com — 2026-08-29
+status: none-found
+deployment:
+  mode: none
+  auth: unknown
+  verified: searched
+note: >-
+  Sygnum ships no MCP server, hosted or local. No endpoint, no npx/pip package, no mention
+  in the developer portal. No candidate tool list is derived either, because there is no
+  public OpenAPI to derive one from — the specifications download only to authenticated
+  clients. No apis.yml MCPServer pointer is emitted, because emitting one would assert an
+  agent surface that does not exist.
+tools: []

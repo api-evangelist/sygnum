@@ -1,0 +1,34 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://www.sygnum.com/help/accounts/custody-fees-at-sygnum/ (HTTP 200) and
+  https://www.sygnum.com/wp-content/uploads/2025/03/Private-Clients_PriceList_Sygnum-Bank_25March2025.pdf
+  (HTTP 200, application/pdf)
+plan_count: 0
+note: >-
+  Sygnum publishes no API plans, tiers, quotas or per-call pricing of any kind. There is no
+  self-serve signup for the B2B APIs: access follows a bank client relationship and a
+  contract, and the developer portal binds each Auth0 client to a named contract. What IS
+  published is banking pricing, not API pricing — custody is charged in basis points per
+  annum on assets held, and a dated price list PDF exists for private clients. Those are
+  recorded below as commercial context; none of them is an API plan.
+plans: []
+banking_pricing:
+- item: Digital asset custody
+  model: basis points (bps) per annum on the volume of digital assets held
+  amount: not published on the web page
+  source: https://www.sygnum.com/help/accounts/custody-fees-at-sygnum/
+- item: Staking
+  model: >-
+    a fixed percentage of accrued rewards, charged in fiat at the end of each billing cycle
+  amount: not published on the web page
+  source: https://www.sygnum.com/help/staking/how-long-will-my-staking-request-take/
+- item: Private client price list
+  model: published PDF price list
+  published: '2025-03-25'
+  url: https://www.sygnum.com/wp-content/uploads/2025/03/Private-Clients_PriceList_Sygnum-Bank_25March2025.pdf
+access_model:
+  self_serve: false
+  detail: >-
+    "Become a client" (https://start.join.sygnum.com/) is the entry point; API access is
+    then arranged with the Sygnum team and scoped per contract.

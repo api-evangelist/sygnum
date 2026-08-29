@@ -1,0 +1,50 @@
+generated: '2026-08-29'
+method: probed
+source: https://auth.sygnum.com/.well-known/openid-configuration (HTTP 200)
+note: >-
+  Two scope surfaces exist and only one of them is public. The OIDC scopes below are the
+  identity scopes the Auth0 tenant advertises anonymously. The API scopes that actually
+  gate the Banking/Trading/Custody/Staking/Connect/Protect/Market Data resources are served
+  from https://api.sygnum.com/b2b/v1/available-scopes, which returns HTTP 401 to an
+  anonymous caller — they are enumerable only inside the developer portal's Access
+  Management screen after a client login. Nothing about the API scope names is asserted
+  here because nothing about them is published.
+docs: https://developer.sygnum.com/client-management
+authorization_server: https://auth.sygnum.com/
+token_endpoint: https://auth.sygnum.com/oauth/token
+scopes:
+- name: openid
+  description: OIDC — issue an ID token for the authenticated subject.
+- name: profile
+  description: OIDC — basic profile claims.
+- name: offline_access
+  description: OIDC — issue a refresh token.
+- name: email
+  description: OIDC — email address claim.
+- name: email_verified
+  description: OIDC — email verification status claim.
+- name: name
+  description: OIDC — full name claim.
+- name: given_name
+  description: OIDC — given name claim.
+- name: family_name
+  description: OIDC — family name claim.
+- name: nickname
+  description: OIDC — nickname claim.
+- name: picture
+  description: OIDC — profile picture claim.
+- name: created_at
+  description: OIDC — account creation timestamp claim.
+- name: identities
+  description: Auth0 — linked identity providers claim.
+- name: phone
+  description: OIDC — phone number claim.
+- name: address
+  description: OIDC — postal address claim.
+api_scopes:
+  published: false
+  endpoint: https://api.sygnum.com/b2b/v1/available-scopes
+  http_status: 401
+  assignment: >-
+    Per Auth0 client, chosen in the developer portal when the client is created or edited
+    ("New Auth0 client -> Scope"), and bound to the partner's contract.

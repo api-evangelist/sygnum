@@ -1,0 +1,88 @@
+generated: '2026-08-29'
+method: probed
+source: live GET of /.well-known/* on every Sygnum host named in apis.yml and in the developer-portal bundle
+note: >-
+  www.sygnum.com sits behind a Cloudflare bot challenge that answers 403 to browser-style
+  User-Agents; a plain probe User-Agent is served normally, which is how the RFC 9116
+  security.txt below was read. developer.sygnum.com is a client-side SPA whose origin
+  answers 403 to non-browser agents and returns the same 1,081-byte HTML shell (HTTP 200)
+  to browser agents for every path — none of its /.well-known/* 200s is a real document,
+  so nothing from that host is recorded as a hit.
+hosts:
+- host: www.sygnum.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: sygnum-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: auth.sygnum.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: sygnum-auth-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: sygnum-auth-openid-configuration.json
+  - path: /.well-known/jwks.json
+    status: 200
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: api.sygnum.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: developer.sygnum.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  - path: /.well-known/ai-plugin.json
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
