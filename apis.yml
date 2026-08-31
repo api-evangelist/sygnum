@@ -32,6 +32,21 @@ tags:
 - Tokenization
 - Settlement
 - Market Data
+- Financial-Services
+- Switzerland
+- Singapore
+- B2B
+tags_raw:
+- Company
+- Banking
+- Digital Assets
+- Cryptocurrency
+- Custody
+- Trading
+- Staking
+- Tokenization
+- Settlement
+- Market Data
 - Financial Services
 - Switzerland
 - Singapore
@@ -45,6 +60,10 @@ apis:
   baseURL: https://api.sygnum.com/b2b
   tags:
   - Banking
+  - Account
+  - Balances
+  tags_raw:
+  - Banking
   - Accounts
   - Balances
   properties:
@@ -57,6 +76,10 @@ apis:
   humanURL: https://developer.sygnum.com/trading
   baseURL: https://api.sygnum.com/b2b
   tags:
+  - Trading
+  - Order
+  - FIX
+  tags_raw:
   - Trading
   - Orders
   - FIX
@@ -95,6 +118,9 @@ apis:
   humanURL: https://developer.sygnum.com/staking/wallet
   baseURL: https://api.sygnum.com/b2b
   tags:
+  - Wallets
+  - Digital Assets
+  tags_raw:
   - Wallet
   - Digital Assets
 - name: Sygnum Digital Transfer API
@@ -149,6 +175,10 @@ apis:
   humanURL: https://developer.sygnum.com/client-management
   baseURL: https://api.sygnum.com/b2b
   tags:
+  - Access Management
+  - Authentication
+  - Credentials
+  tags_raw:
   - Access Management
   - OAuth
   - Credentials
