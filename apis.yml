@@ -48,7 +48,7 @@ tags:
 - Tokenization
 - Settlement
 - Market Data
-- Financial-Services
+- Financial Services
 - Switzerland
 - Singapore
 - B2B
@@ -67,6 +67,7 @@ tags_raw:
 - Switzerland
 - Singapore
 - B2B
+- Financial-Services
 apis:
 - name: Sygnum Banking API
   description: >-

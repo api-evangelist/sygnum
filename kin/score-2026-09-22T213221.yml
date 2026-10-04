@@ -1,31 +1,28 @@
-# Kin Score artifact — sygnum — 2026-08-30T220315
+# Kin Score artifact — sygnum — 2026-09-22T213221
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: sygnum
-  schema_version: 0.17.2
-  scored_at: '2026-08-30'
-  run_ts: 2026-08-30T220315
-  composite: 53.7
+  schema_version: 0.22.0
+  scored_at: '2026-09-22'
+  run_ts: 2026-09-22T213221
+  composite: 53.4
   band: developing
   facets:
     discoverability: 81.5
-    contract_quality: 42.7
-    governance: 18.2
+    contract_quality: 41.6
+    contract_governance: 18.2
     operational_transparency: 21.1
     developer_ergonomics: 64.3
-    commercial_clarity: 52.6
-    contract_governance: 18.2
     access_clarity: 52.6
   agent_readiness:
-    score: 41.2
+    score: 37.8
     band: agent-ready
-    band_gated_from: agent-native
     dimensions:
       spec_presence: true
       agentic_access: false
       reversibility_documented: false
-      mcp_server: documented
+      mcp_server: false
       auth_clarity: served
       idempotency: false
       error_semantics: documented
@@ -47,3 +44,6 @@ kin_score:
     regime_id: banking_open_finance
     score: 74.7
     matched_via: tags
+  provenance:
+    mcp: first-party
+    conformance: first-party
