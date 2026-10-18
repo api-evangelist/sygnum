@@ -192,7 +192,7 @@ apis:
   humanURL: https://developer.sygnum.com/client-management
   baseURL: https://api.sygnum.com/b2b
   tags:
-  - Access Management
+  - Identity and Access Management
   - Authentication
   - Credentials
   tags_raw:
